@@ -1,0 +1,35 @@
+# ============================================================
+# Repo Health Checker — GitHub Actions Workflow
+# ============================================================
+# This workflow runs automatically whenever a Pull Request
+# is opened, updated, or reopened against the main branch.
+#
+# It validates repository quality by running a shell script
+# that checks for proper documentation, .gitignore presence,
+# and ensures no secret files (.env) are accidentally included.
+# ============================================================
+
+name: Repo Health Check
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  health-check:
+    name: Validate Repository Health
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository code
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # Step 2: Make the validation script executable
+      - name: Make Script Executable
+        run: chmod +x scripts/check.sh
+
+      # Step 3: Run all validation checks
+      - name: Run Health Checks
+        run: ./scripts/check.sh
