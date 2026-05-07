@@ -118,6 +118,26 @@ check_no_secrets() {
   return 0
 }
 
+check_commit_message() {
+  print_section "Commit Message Validation"
+
+  # Get the latest commit message
+  commit_msg=$(git log -1 --pretty=%s)
+  word_count=$(echo "$commit_msg" | wc -w)
+
+  echo "  Latest commit: \"$commit_msg\""
+  echo "  Word count: $word_count"
+
+  if [ "$word_count" -le 5 ]; then
+    print_fail "Commit message has only $word_count words (minimum: 6)"
+    print_fail "Write meaningful commit messages that describe the change"
+    return 1
+  fi
+  print_pass "Commit message has $word_count words (above minimum of 5)"
+
+  return 0
+}
+
 # ──────────────────────────────────────────────────────────
 # Main Execution
 # ──────────────────────────────────────────────────────────
@@ -138,6 +158,10 @@ main() {
   fi
 
   if ! check_no_secrets; then
+    all_passed=false
+  fi
+
+  if ! check_commit_message; then
     all_passed=false
   fi
 
