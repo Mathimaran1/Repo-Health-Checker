@@ -1,5 +1,6 @@
 # 🏥 Repo Health Checker
 
+[![Repo Health Check](https://github.com/Mathimaran1/Repo-Health-Checker/actions/workflows/check.yml/badge.svg)](https://github.com/Mathimaran1/Repo-Health-Checker/actions/workflows/check.yml)
 A beginner-friendly DevOps mini project that **automatically validates repository quality** whenever a Pull Request is created.
 
 This project simulates how real companies review code before merging it into the main branch — using **GitHub Actions** and a **Bash validation script** to act as an automated quality inspector.
