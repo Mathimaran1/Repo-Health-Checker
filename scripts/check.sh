@@ -123,6 +123,13 @@ check_commit_message() {
 
   # Get the latest commit message
   commit_msg=$(git log -1 --pretty=%s)
+
+  # Skip validation for merge commits (common in GitHub Actions PR checkouts)
+  if [[ "$commit_msg" == Merge* ]]; then
+    print_pass "Merge commit detected, skipping message length validation"
+    return 0
+  fi
+
   word_count=$(echo "$commit_msg" | wc -w)
 
   echo "  Latest commit: \"$commit_msg\""
